@@ -1,6 +1,29 @@
-import {describe, expect, test, it} from 'vitest';
+import {describe, expect, test, it, vi} from 'vitest';
 import request from "supertest";
 import { app } from ".."
+
+// it will get mocked
+vi.mock('../db', () => ({
+  prismaClient: { sum: { create: vi.fn() }}
+}));
+
+
+//otherwise will get this error:-
+
+// ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯
+
+//  FAIL  src/tests/index.test.ts [ src/tests/index.test.ts ]
+// Error: @prisma/client did not initialize yet. Please run "prisma generate" and try to import it again.
+//  ❯ new PrismaClient node_modules/.prisma/client/default.js:43:11
+//  ❯ src/db.ts:3:29
+//       1| import { PrismaClient } from "@prisma/client";
+//       2| 
+//       3| export const prismaClient = new PrismaClient();
+//        |                             ^
+//       4| 
+//       5| 
+//  ❯ src/index.ts:4:1
+
 
 describe("POST /sum", () => {
     it("should return the sum of two numbers", async () => {
