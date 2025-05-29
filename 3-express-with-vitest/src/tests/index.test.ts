@@ -1,17 +1,18 @@
 import {describe, expect, test, it, vi} from 'vitest';
 import request from "supertest";
 import { app } from ".."
+import { userfn } from '../utils/users';
 
 // deep mock => figures out on its own
 vi.mock('../db');
-
+vi.mock("../utils/users")
 
 /*
 // it will get mocked => problem need to do manually.. like added new model then add that etc etc..
 vi.mock('../db', () => ({
   prismaClient: { sum: { create: vi.fn() }}
-}));
-
+  }));
+  
 */
 
 
@@ -38,6 +39,8 @@ describe("POST /sum", () => {
           a: 1,
           b: 2
         });
+        console.log(userfn()) // calling => undefined when mock, otherwise retures response(in our case "pratik")
+        
         expect(res.statusCode).toBe(200);
         expect(res.body.ans).toBe(3);
       });
