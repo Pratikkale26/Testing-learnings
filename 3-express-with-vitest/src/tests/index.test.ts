@@ -2,10 +2,17 @@ import {describe, expect, test, it, vi} from 'vitest';
 import request from "supertest";
 import { app } from ".."
 
-// it will get mocked
+// deep mock => figures out on its own
+vi.mock('../db');
+
+
+/*
+// it will get mocked => problem need to do manually.. like added new model then add that etc etc..
 vi.mock('../db', () => ({
   prismaClient: { sum: { create: vi.fn() }}
 }));
+
+*/
 
 
 //otherwise will get this error:-
